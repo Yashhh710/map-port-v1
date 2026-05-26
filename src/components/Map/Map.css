@@ -1,0 +1,100 @@
+/* Moving map wrapper */
+.map-wrapper {
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 110vw;
+    height: 110vh;
+    transition: transform 0.1s ease-out; 
+    will-change: transform;
+}
+
+.map-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* --- THE INTERACTIVE DOT WRAPPER & DOT --- */
+.marker-dot {
+    position: absolute;
+    /* Precise coordinates mapping onto the specific house in the neighborhood map image */
+    top: 16%; 
+    left: 28%; 
+    width: 30px;
+    height: 30px;
+    background-color: var(--dot-color, #ff6a00); 
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2.5px solid white;
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.4), 0 0 0 4px rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.marker-dot svg {
+    width: 16px;
+    height: 16px;
+    stroke: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.marker-dot::after {
+    content: '';
+    position: absolute;
+    top: -4px; left: -4px; right: -4px; bottom: -4px;
+    border: 2.5px solid var(--dot-color, #ff6a00);
+    border-radius: 50%;
+    animation: pulse 2s infinite ease-out;
+}
+
+/* Floating Tooltip Label */
+.marker-dot::before {
+    content: attr(data-label);
+    position: absolute;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    background: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+/* Hover States */
+.marker-dot:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+    background-color: #ffffff;
+    border-color: var(--dot-color, #ff6a00);
+}
+
+.marker-dot:hover svg {
+    stroke: var(--dot-color, #ff6a00);
+}
+
+.marker-dot:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(3); opacity: 0; }
+}
